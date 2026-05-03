@@ -1,0 +1,42 @@
+.page {
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #f4f4f4;
+}
+.form {
+  margin-bottom: 20px;
+}
+
+input {
+  margin-right: 10px;
+  padding: 6px;
+}
+
+button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
