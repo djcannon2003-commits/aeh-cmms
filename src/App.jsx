@@ -12,6 +12,7 @@ function App() {
   const [assetType, setAssetType] = useState('')
   const [status, setStatus] = useState('')
   const [location, setLocation] = useState('')
+  const [parentAssetId, setParentAssetId] = useState('')
 
   const [editingId, setEditingId] = useState(null)
   const [editAssetNumber, setEditAssetNumber] = useState('')
@@ -19,6 +20,7 @@ function App() {
   const [editAssetType, setEditAssetType] = useState('')
   const [editStatus, setEditStatus] = useState('')
   const [editLocation, setEditLocation] = useState('')
+  const [editParentAssetId, setEditParentAssetId] = useState('')
 
   useEffect(() => {
     fetchAssets()
@@ -39,6 +41,11 @@ function App() {
     setLoading(false)
   }
 
+  function getAssetLabel(id) {
+    const parent = assets.find((a) => a.id === id)
+    return parent ? `${parent.asset_number} - ${parent.asset_name}` : ''
+  }
+
   async function addAsset() {
     if (!assetNumber || !assetName) {
       alert('Asset Number and Name are required')
@@ -49,6 +56,7 @@ function App() {
       {
         company_id: '88e43d03-eb97-4b56-a75d-f5d081896f4e',
         site_id: '49e72850-1b70-4f8d-9ecd-c523a2e017aa',
+        parent_asset_id: parentAssetId || null,
         asset_number: assetNumber,
         asset_name: assetName,
         asset_type: assetType,
@@ -67,6 +75,7 @@ function App() {
     setAssetType('')
     setStatus('')
     setLocation('')
+    setParentAssetId('')
     fetchAssets()
   }
 
@@ -77,6 +86,7 @@ function App() {
     setEditAssetType(asset.asset_type || '')
     setEditStatus(asset.asset_status || '')
     setEditLocation(asset.location || '')
+    setEditParentAssetId(asset.parent_asset_id || '')
   }
 
   function cancelEdit() {
@@ -89,9 +99,15 @@ function App() {
       return
     }
 
+    if (editParentAssetId === id) {
+      alert('An asset cannot be its own parent')
+      return
+    }
+
     const { error } = await supabase
       .from('Assets')
       .update({
+        parent_asset_id: editParentAssetId || null,
         asset_number: editAssetNumber,
         asset_name: editAssetName,
         asset_type: editAssetType,
@@ -125,7 +141,9 @@ function App() {
 
   const filteredAssets = assets.filter((a) =>
     (a.asset_name || '').toLowerCase().includes(search.toLowerCase()) ||
-    (a.asset_number || '').toLowerCase().includes(search.toLowerCase())
+    (a.asset_number || '').toLowerCase().includes(search.toLowerCase()) ||
+    (a.asset_type || '').toLowerCase().includes(search.toLowerCase()) ||
+    (a.location || '').toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -146,6 +164,15 @@ function App() {
         </select>
 
         <input placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} />
+
+        <select value={parentAssetId} onChange={(e) => setParentAssetId(e.target.value)}>
+          <option value="">No Parent Asset</option>
+          {assets.map((asset) => (
+            <option key={asset.id} value={asset.id}>
+              {asset.asset_number} - {asset.asset_name}
+            </option>
+          ))}
+        </select>
 
         <button onClick={addAsset} disabled={editingId !== null}>
           Add Asset
@@ -169,6 +196,7 @@ function App() {
               <th>Type</th>
               <th>Status</th>
               <th>Location</th>
+              <th>Parent Asset</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -191,6 +219,18 @@ function App() {
                     </td>
                     <td><input value={editLocation} onChange={(e) => setEditLocation(e.target.value)} /></td>
                     <td>
+                      <select value={editParentAssetId} onChange={(e) => setEditParentAssetId(e.target.value)}>
+                        <option value="">No Parent Asset</option>
+                        {assets
+                          .filter((parent) => parent.id !== asset.id)
+                          .map((parent) => (
+                            <option key={parent.id} value={parent.id}>
+                              {parent.asset_number} - {parent.asset_name}
+                            </option>
+                          ))}
+                      </select>
+                    </td>
+                    <td>
                       <button onClick={() => saveEdit(asset.id)}>Save</button>
                       <button onClick={cancelEdit}>Cancel</button>
                     </td>
@@ -202,6 +242,7 @@ function App() {
                     <td>{asset.asset_type}</td>
                     <td>{asset.asset_status}</td>
                     <td>{asset.location}</td>
+                    <td>{asset.parent_asset_id ? getAssetLabel(asset.parent_asset_id) : 'None'}</td>
                     <td>
                       <button onClick={() => startEdit(asset)}>Edit</button>
                       <button onClick={() => deleteAsset(asset.id)}>Delete</button>
