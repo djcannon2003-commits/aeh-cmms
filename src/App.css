@@ -1,42 +1,111 @@
-.page {
-  padding: 30px;
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
 }
 
-h1 {
-  margin-bottom: 5px;
+.app {
+  display: flex;
+  height: 100vh;
 }
 
-h2 {
-  margin-top: 0;
-  color: #555;
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: #1e293b;
+  color: white;
+  padding: 20px;
 }
 
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar li:hover {
+  background: #334155;
+}
+
+.sidebar .active {
+  background: #3b82f6;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  background: #f1f5f9;
+  padding: 20px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.primary {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* CARD */
+.card {
+  background: white;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* TABLE */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 25px;
-}
-
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
 }
 
 th {
-  background: #f4f4f4;
-}
-.form {
-  margin-bottom: 20px;
-}
-
-input {
-  margin-right: 10px;
-  padding: 6px;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #ddd;
 }
 
-button {
-  padding: 6px 12px;
-  cursor: pointer;
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* STATUS */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.status.ACTIVE {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.INACTIVE {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status.SPARE {
+  background: #e0f2fe;
+  color: #075985;
 }
