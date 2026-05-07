@@ -128,56 +128,81 @@ function App() {
       </main>
 
       {showModal && (
-        <div className="modal-backdrop">
-          <div className="modal-card">
-            <h2>Add Asset</h2>
+  <div className="modal-backdrop">
+    <div className="modal-card">
 
-            <label>Asset Number</label>
-            <input
-              value={newAssetNumber}
-              onChange={(e) => setNewAssetNumber(e.target.value)}
-              placeholder="Example: CV-001"
-            />
+      <div className="modal-header">
+        <h2>Add Asset</h2>
+        <p>Create a new equipment or asset record</p>
+      </div>
 
-            <label>Asset Name</label>
-            <input
-              value={newAssetName}
-              onChange={(e) => setNewAssetName(e.target.value)}
-              placeholder="Example: Infeed Conveyor"
-            />
+      <div className="form-row">
+        <label>Asset Number</label>
+        <input
+          value={newAssetNumber}
+          onChange={(e) => setNewAssetNumber(e.target.value)}
+          placeholder="CV-001"
+        />
+      </div>
 
-            <label>Asset Type</label>
-            <input
-              value={newAssetType}
-              onChange={(e) => setNewAssetType(e.target.value)}
-              placeholder="Example: Conveyor"
-            />
+      <div className="form-row">
+        <label>Asset Name</label>
+        <input
+          value={newAssetName}
+          onChange={(e) => setNewAssetName(e.target.value)}
+          placeholder="Infeed Conveyor"
+        />
+      </div>
 
-            <label>Status</label>
-            <select value={newStatus} onChange={(e) => setNewStatus(e.target.value)}>
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="INACTIVE">INACTIVE</option>
-              <option value="SPARE">SPARE</option>
-            </select>
+      <div className="form-row">
+        <label>Asset Type</label>
+        <input
+          value={newAssetType}
+          onChange={(e) => setNewAssetType(e.target.value)}
+          placeholder="Conveyor"
+        />
+      </div>
 
-            <label>Location</label>
-            <input
-              value={newLocation}
-              onChange={(e) => setNewLocation(e.target.value)}
-              placeholder="Example: Line 1"
-            />
+      <div className="form-row">
+        <label>Status</label>
+        <select
+          value={newStatus}
+          onChange={(e) => setNewStatus(e.target.value)}
+        >
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="INACTIVE">INACTIVE</option>
+          <option value="SPARE">SPARE</option>
+        </select>
+      </div>
 
-            <div className="modal-actions">
-              <button className="secondary-btn" onClick={() => setShowModal(false)}>
-                Cancel
-              </button>
-              <button className="primary-btn" onClick={handleAddAsset}>
-                Save Asset
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <div className="form-row">
+        <label>Location</label>
+        <input
+          value={newLocation}
+          onChange={(e) => setNewLocation(e.target.value)}
+          placeholder="Line 1"
+        />
+      </div>
+
+      <div className="modal-actions">
+        <button
+          className="secondary-btn"
+          onClick={() => setShowModal(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="primary-btn"
+          onClick={handleAddAsset}
+        >
+          Save Asset
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
     </div>
   )
 }
