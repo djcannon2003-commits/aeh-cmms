@@ -215,5 +215,12 @@ td {
 }
 
 .data-table {
-  min-width: 900px;
+  width: 100%;
+  min-width: 1100px; /* forces scroll if too wide */
+  border-collapse: collapse;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
