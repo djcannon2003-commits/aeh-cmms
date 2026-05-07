@@ -209,3 +209,11 @@ td {
   border-top: 1px solid #e5e7eb;
   padding-top: 16px;
 }
+
+.content-card {
+  overflow-x: auto;
+}
+
+.data-table {
+  min-width: 900px;
+}
